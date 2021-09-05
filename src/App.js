@@ -1,25 +1,56 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//Importing Components
+import CardList from './Components/CardList/CardList';
+import SearchBox from './Components/SearchBox/SearchBox';
+
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      doctors: [],
+      searchField: '',
+    };
+
+    //    this.handleChange = this.handleChange.bind(this);
+  }
+
+  async componentDidMount() {
+    //Fetch User Data From API
+    const doctorsData = await (
+      await fetch('https://jsonplaceholder.typicode.com/users')
+    ).json();
+
+    this.setState({ doctors: doctorsData });
+  }
+
+  handleChange = (e) => {
+    this.setState({ searchField: e.target.value });
+  };
+
+  render() {
+    const { searchField, doctors } = this.state;
+    const filteredDoctors = doctors.filter((doctor) =>
+      doctor.name.toLowerCase().includes(searchField.toLowerCase())
+    );
+
+    return (
+      <div className="App">
+        <div className="heading">
+          <h1>Kittys Den</h1>
+        </div>
+
+        <SearchBox
+          placeholder="Search Kittens"
+          handleChange={this.handleChange}
+        />
+
+        <CardList doctors={filteredDoctors} />
+      </div>
+    );
+  }
 }
 
 export default App;

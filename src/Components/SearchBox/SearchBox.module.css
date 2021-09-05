@@ -1,0 +1,13 @@
+.search {
+  -webkit-appearance: none;
+  border: 3px double aquamarine;
+  outline: none;
+  padding: 10px;
+  max-width: 170px;
+  line-height: 30px;
+  margin: 30px auto;
+  font-size: 15px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  color: darkblue;
+}
